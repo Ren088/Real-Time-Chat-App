@@ -1,0 +1,652 @@
+:root {
+    --bg: #e9e6f4;
+    --panel: #fbfaff;
+    --chat: #f1effa;
+    --ink: #1b1740;
+    --muted: #7a76a0;
+    --line: #dcd8ee;
+    --side: #3b2fd9;
+    --me: #3b2fd9;
+    --me-ink: #ffffff;
+    --them: #ffffff;
+    --hot: #ff7a1a;
+    --ok: #2fe0a0;
+    --shadow: 0 30px 80px -20px rgba(40, 30, 140, .35);
+    color-scheme: light;
+    box-sizing: border-box;
+    padding-top: env(safe-area-inset-top, 0px);
+    padding-bottom: env(safe-area-inset-bottom, 0px);
+}
+
+@media (prefers-color-scheme:dark) {
+    :root:not([data-theme="light"]) {
+        --bg: #0f0d22;
+        --panel: #17143a;
+        --chat: #120f2e;
+        --ink: #ece9ff;
+        --muted: #9490c2;
+        --line: #2b2760;
+        --side: #241f6e;
+        --me: #6a5cff;
+        --them: #1f1b4d;
+        --hot: #ff8f3d;
+        --shadow: 0 30px 80px -20px rgba(0, 0, 0, .6);
+        color-scheme: dark
+    }
+}
+
+:root[data-theme="dark"] {
+    --bg: #0f0d22;
+    --panel: #17143a;
+    --chat: #120f2e;
+    --ink: #ece9ff;
+    --muted: #9490c2;
+    --line: #2b2760;
+    --side: #241f6e;
+    --me: #6a5cff;
+    --them: #1f1b4d;
+    --hot: #ff8f3d;
+    --shadow: 0 30px 80px -20px rgba(0, 0, 0, .6);
+    color-scheme: dark
+}
+
+*,
+*::before,
+*::after {
+    box-sizing: inherit
+}
+
+html,
+body {
+    height: 100%;
+    margin: 0
+}
+
+body {
+    background: var(--bg);
+    color: var(--ink);
+    font-family: "Bricolage Grotesque", system-ui, -apple-system, "Segoe UI", sans-serif;
+    font-size: 16px;
+    line-height: 1.4;
+    display: flex;
+    align-items: center;
+    justify-content: center
+}
+
+.app {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    background: var(--panel);
+    overflow: hidden
+}
+
+.side {
+    background: var(--side);
+    color: #fff;
+    padding: 14px 16px 12px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px
+}
+
+.brand {
+    display: flex;
+    align-items: center;
+    gap: 12px
+}
+
+h1 {
+    margin: 0;
+    font-size: 1.9rem;
+    font-weight: 800;
+    letter-spacing: -.035em;
+    line-height: 1
+}
+
+.bars {
+    display: flex;
+    align-items: center;
+    gap: 3px;
+    height: 26px
+}
+
+.bars i {
+    width: 5px;
+    height: 30%;
+    border-radius: 3px;
+    background: var(--hot);
+    transition: height .3s
+}
+
+.bars.live i {
+    animation: eq .7s ease-in-out infinite
+}
+
+.bars.live i:nth-child(2) {
+    animation-delay: .15s
+}
+
+.bars.live i:nth-child(3) {
+    animation-delay: .3s
+}
+
+@keyframes eq {
+
+    0%,
+    100% {
+        height: 30%
+    }
+
+    50% {
+        height: 100%
+    }
+}
+
+.status {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: .88rem;
+    color: rgba(255, 255, 255, .78)
+}
+
+.dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--ok)
+}
+
+.people {
+    display: flex;
+    gap: 8px;
+    overflow-x: auto
+}
+
+.chip {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 3px 12px 3px 3px;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, .13);
+    font-size: .88rem;
+    white-space: nowrap
+}
+
+.av {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    display: grid;
+    place-items: center;
+    color: #fff;
+    font-weight: 600;
+    font-size: .8rem;
+    border: 2px solid rgba(255, 255, 255, .85)
+}
+
+.main {
+    flex: 1;
+    min-height: 0;
+    display: flex;
+    flex-direction: column;
+    background: var(--chat)
+}
+
+#log {
+    flex: 1;
+    overflow-y: auto;
+    padding: 18px 16px 8px;
+    display: flex;
+    flex-direction: column;
+    gap: 3px
+}
+
+.empty {
+    margin: auto;
+    text-align: center;
+    color: var(--muted);
+    max-width: 26ch;
+    font-size: 1.05rem
+}
+
+.row {
+    display: flex;
+    flex-direction: column;
+    max-width: 80%;
+    animation: pop .22s ease-out
+}
+
+@keyframes pop {
+    from {
+        opacity: 0;
+        transform: translateY(8px) scale(.98)
+    }
+}
+
+.row.me {
+    align-self: flex-end;
+    align-items: flex-end
+}
+
+.row.them {
+    align-self: flex-start;
+    align-items: flex-start
+}
+
+.row.first {
+    margin-top: 14px
+}
+
+.who {
+    font-size: .8rem;
+    font-weight: 600;
+    margin: 0 6px 3px
+}
+
+.bubble {
+    padding: 9px 14px;
+    border-radius: 20px;
+    overflow-wrap: anywhere;
+    white-space: pre-wrap
+}
+
+.me .bubble {
+    background: var(--me);
+    color: var(--me-ink);
+    border-bottom-right-radius: 6px
+}
+
+.them .bubble {
+    background: var(--them);
+    border: 1px solid var(--line);
+    border-bottom-left-radius: 6px
+}
+
+.time {
+    font-size: .7rem;
+    color: var(--muted);
+    margin: 3px 6px 0
+}
+
+#typing {
+    min-height: 26px;
+    padding: 2px 20px 4px;
+    font-size: .84rem;
+    color: var(--muted);
+    font-style: italic
+}
+
+.composer {
+    display: flex;
+    gap: 10px;
+    padding: 10px 14px 14px;
+    align-items: center
+}
+
+input {
+    font: inherit;
+    color: var(--ink);
+    background: var(--panel);
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    padding: 12px 18px;
+    flex: 1;
+    min-width: 0
+}
+
+input::placeholder {
+    color: var(--muted)
+}
+
+input:focus-visible,
+button:focus-visible {
+    outline: 2px solid var(--me);
+    outline-offset: 2px
+}
+
+#send {
+    width: 46px;
+    height: 46px;
+    padding: 0;
+    border: 0;
+    border-radius: 50%;
+    background: var(--hot);
+    color: #1b1740;
+    cursor: pointer;
+    display: grid;
+    place-items: center;
+    transition: transform .15s
+}
+
+#send:active {
+    transform: scale(.92)
+}
+
+#send svg {
+    width: 20px;
+    height: 20px
+}
+
+#join {
+    position: fixed;
+    inset: 0;
+    background: var(--side);
+    display: grid;
+    place-items: center;
+    padding: 20px;
+    z-index: 5
+}
+
+.card {
+    width: 100%;
+    max-width: 380px;
+    background: var(--panel);
+    border-radius: 28px;
+    padding: 28px;
+    box-shadow: var(--shadow)
+}
+
+#preview {
+    width: 72px;
+    height: 72px;
+    border-radius: 50%;
+    display: grid;
+    place-items: center;
+    color: #fff;
+    font-size: 1.9rem;
+    font-weight: 800;
+    margin-bottom: 16px;
+    background: var(--line);
+    transition: background .2s
+}
+
+.card h2 {
+    margin: 0 0 6px;
+    font-size: 2rem;
+    font-weight: 800;
+    letter-spacing: -.03em;
+    line-height: 1.05
+}
+
+.card p {
+    margin: 0 0 18px;
+    color: var(--muted)
+}
+
+.card input {
+    width: 100%;
+    margin-bottom: 12px;
+    border-radius: 14px;
+    background: var(--chat)
+}
+
+#enter {
+    width: 100%;
+    font: inherit;
+    font-weight: 600;
+    border: 0;
+    border-radius: 14px;
+    padding: 13px;
+    background: var(--me);
+    color: var(--me-ink);
+    cursor: pointer
+}
+
+.note {
+    margin-top: 12px;
+    font-size: .8rem;
+    color: var(--muted)
+}
+
+@media (min-width:860px) {
+    body {
+        padding: 28px
+    }
+
+    .app {
+        max-width: 1020px;
+        max-height: 820px;
+        flex-direction: row;
+        border-radius: 28px;
+        box-shadow: var(--shadow)
+    }
+
+    .side {
+        width: 280px;
+        flex: none;
+        padding: 28px 22px;
+        gap: 18px
+    }
+
+    h1 {
+        font-size: 2.6rem
+    }
+
+    .bars {
+        height: 36px
+    }
+
+    .bars i {
+        width: 6px
+    }
+
+    .people {
+        flex-direction: column;
+        overflow: auto
+    }
+
+    .chip {
+        padding: 5px 14px 5px 5px
+    }
+
+    .av {
+        width: 34px;
+        height: 34px
+    }
+
+    #log {
+        padding: 24px 28px 8px
+    }
+
+    .composer {
+        padding: 12px 24px 22px
+    }
+}
+
+@media (prefers-reduced-motion:reduce) {
+    .row {
+        animation: none
+    }
+
+    .bars.live i {
+        animation: none;
+        height: 70%
+    }
+}
+
+.head {
+    font-size: .82rem;
+    font-weight: 600;
+    color: rgba(255, 255, 255, .7);
+    margin-bottom: 8px;
+    display: none
+}
+
+.sect {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+    overflow-x: auto
+}
+
+.rooms,
+.people {
+    display: contents
+}
+
+.status {
+    display: none
+}
+
+.room {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    border: 0;
+    font: inherit;
+    font-size: .92rem;
+    color: #fff;
+    background: rgba(255, 255, 255, .12);
+    padding: 7px 12px;
+    border-radius: 12px;
+    cursor: pointer;
+    white-space: nowrap;
+    text-align: left;
+    transition: background .15s
+}
+
+.room:hover {
+    background: rgba(255, 255, 255, .22)
+}
+
+.room.on {
+    background: #fff;
+    color: var(--side);
+    font-weight: 600
+}
+
+.meta {
+    margin-left: auto;
+    display: flex;
+    gap: 6px;
+    align-items: center;
+    font-size: .8rem;
+    opacity: .9;
+    padding-left: 4px
+}
+
+.unread {
+    background: var(--hot);
+    color: #1b1740;
+    border-radius: 999px;
+    padding: 0 7px;
+    font-weight: 600;
+    font-size: .75rem
+}
+
+.newroom {
+    flex: none;
+    width: 112px;
+    background: rgba(255, 255, 255, .1);
+    border: 1px dashed rgba(255, 255, 255, .4);
+    color: #fff;
+    border-radius: 12px;
+    padding: 7px 12px;
+    font-size: .9rem
+}
+
+.newroom::placeholder {
+    color: rgba(255, 255, 255, .7)
+}
+
+.roombar {
+    display: flex;
+    align-items: baseline;
+    gap: 12px;
+    padding: 12px 16px;
+    background: var(--panel);
+    border-bottom: 1px solid var(--line)
+}
+
+.roombar h2 {
+    margin: 0;
+    font-size: 1.3rem;
+    font-weight: 800;
+    letter-spacing: -.02em
+}
+
+.roombar span {
+    font-size: .85rem;
+    color: var(--muted)
+}
+
+.lbl {
+    font-size: .85rem;
+    font-weight: 600;
+    margin-bottom: 8px
+}
+
+#joinrooms {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 16px
+}
+
+.pick {
+    font: inherit;
+    font-size: .9rem;
+    border: 1px solid var(--line);
+    background: var(--chat);
+    color: var(--ink);
+    border-radius: 999px;
+    padding: 6px 14px;
+    cursor: pointer
+}
+
+.pick.on {
+    background: var(--me);
+    color: #fff;
+    border-color: var(--me)
+}
+
+@media (min-width:860px) {
+    .status {
+        display: flex
+    }
+
+    .head {
+        display: block
+    }
+
+    .side {
+        gap: 20px
+    }
+
+    .sect {
+        flex-direction: column;
+        align-items: stretch;
+        overflow: visible
+    }
+
+    .sect.ppl {
+        flex: 1;
+        min-height: 0;
+        overflow-y: auto
+    }
+
+    .rooms,
+    .people {
+        display: flex;
+        flex-direction: column;
+        gap: 6px;
+        overflow: visible
+    }
+
+    .newroom {
+        width: 100%;
+        margin-top: 6px
+    }
+
+    .roombar {
+        padding: 20px 28px 16px
+    }
+
+    .roombar h2 {
+        font-size: 1.5rem
+    }
+}
